@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- 🔑 REQUIRED FOR MOBILE -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Perfect Heart</title>
+
+<style>
+/* 🌈 BACKGROUND */
+body {
+  margin: 0;
+  min-height: 100svh; /* FIX for mobile address bar */
+  background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #fad0c4, #ffd1ff);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ❤️ PERFECT HEART (RESPONSIVE) */
+.heart {
+  position: relative;
+  width: clamp(120px, 30vw, 200px);
+  height: clamp(120px, 30vw, 200px);
+  background: #ff4d6d;
+  transform: rotate(-45deg);
+  animation: heartbeat 1.4s infinite;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(255, 77, 109, 0.9);
+  touch-action: manipulation; /* Mobile tap fix */
+}
+
+/* ❤️ HEART CIRCLES */
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ff4d6d;
+  border-radius: 50%;
+}
+
+.heart::before {
+  top: -50%;
+  left: 0;
+}
+
+.heart::after {
+  left: 50%;
+  top: 0;
+}
+
+/* 💬 TEXT ON HEART */
+.heart span {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  color: #fff;
+  font-size: clamp(12px, 2.5vw, 18px);
+  font-weight: bold;
+  text-align: center;
+  padding: 14px;
+  z-index: 2;
+  user-select: none;
+}
+
+/* 💓 HEARTBEAT */
+@keyframes heartbeat {
+  0% { transform: rotate(-45deg) scale(1); }
+  30% { transform: rotate(-45deg) scale(1.08); }
+  60% { transform: rotate(-45deg) scale(1); }
+  80% { transform: rotate(-45deg) scale(1.12); }
+  100% { transform: rotate(-45deg) scale(1); }
+}
+
+/* ✨ HOVER (PC ONLY) */
+@media (hover: hover) {
+  .heart:hover {
+    box-shadow: 0 0 45px rgba(255, 77, 109, 1);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ❤️ PERFECT HEART -->
+<div class="heart" onclick="openPage()">
+  <span>Click Me<br>for Surprise 🎁</span>
+</div>
+
+<script>
+function openPage() {
+  window.location.href = "main.html";
+}
+</script>
+
+</body>
+</html>

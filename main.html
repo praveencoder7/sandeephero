@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday ❤️</title>
+
+<style>
+/* 🌈 BACKGROUND */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #fad0c4, #ffd1ff);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 📦 CENTER */
+#main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+#content {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ✍️ TEXT */
+.say {
+  font-size: clamp(18px, 4.5vw, 22px);
+  line-height: 1.8;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.say.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* 🖼️ IMAGE */
+#photo {
+  margin-top: 25px;
+  opacity: 0;
+  transform: scale(0.6) translateY(30px);
+  filter: blur(6px);
+}
+
+#photo img {
+  width: clamp(140px, 45vw, 180px);
+  height: clamp(140px, 45vw, 180px);
+  border-radius: 50%;
+  border: 4px solid #ff4d6d;
+}
+
+/* IMAGE SHOW */
+#photo.show {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  filter: blur(0);
+  transition:
+    opacity 1.8s ease,
+    transform 1.8s cubic-bezier(0.19,1,0.22,1),
+    filter 1.8s ease;
+}
+
+#photo.show img {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 18px rgba(255,77,109,0.4); }
+  50% { box-shadow: 0 0 35px rgba(255,77,109,0.9); }
+  100% { box-shadow: 0 0 18px rgba(255,77,109,0.4); }
+}
+
+/* ⏰ CLOCK */
+#clock-box {
+  margin-top: 20px;
+  font-size: clamp(14px, 4vw, 18px);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+#clock-box.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 1.5s ease;
+}
+
+/* 💖 FLOATING HEARTS */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: clamp(16px, 4vw, 22px);
+  color: rgba(255,77,109,0.7);
+  animation: floatUp 6s linear forwards;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio autoplay loop>
+  <source src="BdayAud.mp3" type="audio/mpeg">
+</audio>
+
+<div id="main">
+  <div id="content">
+
+    <!-- ✍️ TEXT -->
+    <div id="text">
+      <div class="say">Hey you 💞</div>
+      <div class="say">Happy Birthday Sandeep Die Hard fan of Prabhas ❤️</div>
+      <div class="say">Born on 1 January 2026 🎂</div>
+      <div class="say">May God bless you always 🍀</div>
+      <div class="say">You make the world brighter every day 💕</div>
+      <div class="say">Today and always, you are deeply loved ❤️</div>
+    </div>
+
+    <!-- 🖼️ IMAGE -->
+    <div id="photo">
+      <img src="pic.jpeg" alt="Jerusha">
+    </div>
+
+    <!-- ⏰ CLOCK -->
+    <div id="clock-box">
+      <span id="clock"></span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* 🖊️ READABLE TYPING */
+const lines = document.querySelectorAll(".say");
+let index = 0;
+
+function typeLine(el, done) {
+  const text = el.textContent;
+  el.textContent = "";
+  el.classList.add("show");
+  let i = 0;
+  const speed = 90;
+
+  const timer = setInterval(() => {
+    el.textContent += text.charAt(i);
+    i++;
+    if (i === text.length) {
+      clearInterval(timer);
+      setTimeout(done, 900);
+    }
+  }, speed);
+}
+
+function startTyping() {
+  if (index < lines.length) {
+    typeLine(lines[index], () => {
+      index++;
+      startTyping();
+    });
+  } else {
+    showImage();
+  }
+}
+
+function showImage() {
+  document.getElementById("photo").classList.add("show");
+  setTimeout(showClock, 1800);
+}
+
+function showClock() {
+  document.getElementById("clock-box").classList.add("show");
+}
+
+startTyping();
+
+/* 💖 FLOATING HEARTS */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 6000);
+}, 1000);
+
+/* ⏰ CLOCK */
+const birthDate = new Date(2014,0,6);
+const nextBirthday = new Date(2026,0,6);
+
+function updateClock() {
+  const now = new Date();
+  const daysAlive = Math.floor((now - birthDate)/(1000*60*60*24));
+  const until = nextBirthday - now;
+
+  document.getElementById("clock").innerHTML =
+    "💖 Alive for " + daysAlive + " days ❤️<br><br>" +
+    "🎂 Next birthday in " + Math.floor(until/(1000*60*60*24)) + " days 🎉";
+}
+setInterval(updateClock, 1000);
+updateClock();
+</script>
+
+</body>
+</html>
